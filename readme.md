@@ -37,5 +37,9 @@ ros2 run wiijoy joy_node
 #define [Wiiのキー] [対応させたいXboxのキー]
 ```
 
+## Example
+https://github.com/hirobon1690/wiijoy/assets/58695125/89d52f40-0dd8-4ca6-b452-d4cea00fdbf8
+
+
 ## License
 GNU GPL
