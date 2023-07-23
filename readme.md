@@ -1,6 +1,6 @@
 # wiijoy
 ## About
-Wiiリモコン(RVL-CNT-01, RVL-CNT-01-TR)をROS2のjoyとして機能させるノード．
+Wiiリモコン(RVL-CNT-01, RVL-CNT-01-TR)をROS2のjoyとして機能させるノード．ヌンチャク以外の周辺機器は未検証．
 
 ## Requirements
 - [wiiuse](https://github.com/wiiuse/wiiuse)

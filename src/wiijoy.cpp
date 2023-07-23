@@ -59,6 +59,7 @@ using namespace std::chrono_literals;
  */
 void handle_event(struct wiimote_t* wm) {
     wiiuse_motion_sensing(wm, 1);
+    wiiuse_set_accel_threshold(wm, 0.1);
     printf("\n\n--- EVENT [id %i] ---\n", wm->unid);
 
     /* if a button is pressed, report it */
@@ -111,6 +112,13 @@ void handle_event(struct wiimote_t* wm) {
         printf("wiimote roll  = %f [%f]\n", wm->orient.roll, wm->orient.a_roll);
         printf("wiimote pitch = %f [%f]\n", wm->orient.pitch, wm->orient.a_pitch);
         printf("wiimote yaw   = %f\n", wm->orient.yaw);
+        printf("wiimote acc= %d %d %d\n", wm->accel.x-127, wm->accel.y-127, wm->accel.z-127);
+        if(abs(wm->accel.x-127)>SHAKE_THRESHOLD || abs(wm->accel.y-127)>SHAKE_THRESHOLD || abs(wm->accel.z-127)>SHAKE_THRESHOLD){
+            printf("shake\n");
+            joy_msg.buttons[WIIMOTE_SHAKE] = 1;
+        }else{
+            printf("\n");
+        }
     }
 
     if (wm->exp.type == EXP_NUNCHUK || wm->exp.type == EXP_MOTION_PLUS_NUNCHUK) {
