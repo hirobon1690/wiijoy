@@ -26,6 +26,7 @@ source install/setup.bash
 ```
 
 ### 実行
+Wiiリモコンの1キーと2キーを同時に押してペアリングモードにしてから
 ```bash
 ros2 run wiijoy joy_node
 ```
