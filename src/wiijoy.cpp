@@ -340,10 +340,6 @@ void handle_disconnect(wiimote* wm) {
     printf("\n\n--- DISCONNECTED [wiimote id %i] ---\n", wm->unid);
 }
 
-void test(struct wiimote_t* wm, byte* data, unsigned short len) {
-    printf("test: %i [%x %x %x %x]\n", len, data[0], data[1], data[2], data[3]);
-}
-
 short any_wiimote_connected(wiimote** wm, int wiimotes) {
     int i;
     if (!wm) {

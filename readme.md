@@ -1,4 +1,4 @@
-# wiimote_as_joy
+# wiijoy
 ## About
 Wiiリモコン(RVL-CNT-01, RVL-CNT-01-TR)をROS2のjoyとして機能させるノード．
 
@@ -17,7 +17,7 @@ sudo make install
 ### 導入
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/hirobon1690/wiimote_as_joy.git
+git clone https://github.com/hirobon1690/wiijoy.git
 cd ../
 colcon build
 source install/setup.bash
@@ -25,7 +25,7 @@ source install/setup.bash
 
 ### 実行
 ```bash
-ros2 run wiimote_as_joy joy_node
+ros2 run wiijoy joy_node
 ```
 
 ## Configuration

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(wiimote_as_joy)
+project(wiijoy)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -16,7 +16,7 @@ find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
 
-add_executable(joy_node src/wiimote_as_joy.cpp)
+add_executable(joy_node src/wiijoy.cpp)
 
 target_link_libraries(joy_node wiiuse)
 target_link_libraries(joy_node m)
