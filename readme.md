@@ -44,3 +44,6 @@ https://github.com/hirobon1690/wiijoy/assets/58695125/89d52f40-0dd8-4ca6-b452-d4
 
 ## License
 GNU GPL
+
+## 謝辞
+[wiiuse](https://github.com/wiiuse/wiiuse)のExampleを改変させていただきました．
