@@ -26,7 +26,6 @@
  *
  */
 
-
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -112,18 +111,40 @@ void handle_event(struct wiimote_t* wm) {
         printf("wiimote roll  = %f [%f]\n", wm->orient.roll, wm->orient.a_roll);
         printf("wiimote pitch = %f [%f]\n", wm->orient.pitch, wm->orient.a_pitch);
         printf("wiimote yaw   = %f\n", wm->orient.yaw);
-        printf("wiimote acc= %d %d %d\n", wm->accel.x-127, wm->accel.y-127, wm->accel.z-127);
-        if(abs(wm->accel.x-127)>SHAKE_THRESHOLD || abs(wm->accel.y-127)>SHAKE_THRESHOLD || abs(wm->accel.z-127)>SHAKE_THRESHOLD){
-            printf("shake\n");
+        printf("wiimote acc= %d %d %d\n", wm->accel.x - 127, wm->accel.y - 127, wm->accel.z - 127);
+        if (abs(wm->accel.x - 127) > SHAKE_THRESHOLD || abs(wm->accel.y - 127) > SHAKE_THRESHOLD || abs(wm->accel.z - 127) > SHAKE_THRESHOLD) {
+            printf("wiimote shake: true\n");
             joy_msg.buttons[WIIMOTE_SHAKE] = 1;
-        }else{
-            printf("\n");
+        } else {
+            printf("wiimote shake: false\n");
         }
     }
 
     if (wm->exp.type == EXP_NUNCHUK || wm->exp.type == EXP_MOTION_PLUS_NUNCHUK) {
         /* nunchuk */
         struct nunchuk_t* nc = (nunchuk_t*)&wm->exp.nunchuk;
+        nc->js.min.x = 29;
+        nc->js.center.x = 121;
+        nc->js.max.x = 223;
+        nc->js.max.y = 224;
+        if (nc->js.x > 1.0) {
+            nc->js.x = 1.0;
+        } else if (nc->js.x < -1.0) {
+            nc->js.x = -1.0;
+        }
+
+        if (nc->js.y > 1.0) {
+            nc->js.y = 1.0;
+        } else if (nc->js.y < -1.0) {
+            nc->js.y = -1.0;
+        }
+
+        if (abs(nc->js.x) < 0.05) {
+            nc->js.x = 0.0;
+        }
+        if (abs(nc->js.y) < 0.05) {
+            nc->js.y = 0.0;
+        }
 
         if (IS_PRESSED(nc, NUNCHUK_BUTTON_C)) {
             printf("Nunchuk: C pressed\n");
@@ -142,8 +163,11 @@ void handle_event(struct wiimote_t* wm) {
         printf("nunchuk joystick magnitude: %f\n", nc->js.mag);
 
         printf("nunchuk joystick vals:      %f, %f\n", nc->js.x, nc->js.y);
+
         joy_msg.axes[NUNCHUCK_STICK_X] = -(nc->js.x);
         joy_msg.axes[NUNCHUCK_STICK_Y] = nc->js.y;
+        
+
         printf("nunchuk joystick calibration (min, center, max): x: %i, %i, %i  y: %i, %i, %i\n",
                nc->js.min.x,
                nc->js.center.x,
@@ -151,6 +175,14 @@ void handle_event(struct wiimote_t* wm) {
                nc->js.min.y,
                nc->js.center.y,
                nc->js.max.y);
+        printf("nunchuk acc= %d %d %d\n", nc->accel.x - 127, nc->accel.y - 127, nc->accel.z - 127);
+        if (abs(nc->accel.x - 127) > NC_SHAKE_THRESHOLD || abs(nc->accel.y - 127) > NC_SHAKE_THRESHOLD || abs(nc->accel.z - 127) > NC_SHAKE_THRESHOLD) {
+            printf("nunchuck shake: true\n");
+            joy_msg.buttons[NUNCHUCK_SHAKE] = 1;
+        } else {
+            printf("nunchuck shake: false\n");
+        }
+
     } else if (wm->exp.type == EXP_CLASSIC) {
         /* classic controller */
         struct classic_ctrl_t* cc = (classic_ctrl_t*)&wm->exp.classic;
