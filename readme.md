@@ -5,6 +5,10 @@ Wiiリモコン(RVL-CNT-01, RVL-CNT-01-TR)をROS2のjoyとして機能させる�
 
 
 ## Requirements
+- libbluetooth
+```bash
+sudo apt install bluez bluetooth libbluetooth-dev
+```
 - [wiiuse](https://github.com/wiiuse/wiiuse)
 ```bash
 git clone https://github.com/wiiuse/wiiuse.git
